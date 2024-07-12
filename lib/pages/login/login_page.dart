@@ -1,6 +1,7 @@
-import 'package:animate_do/animate_do.dart';
+import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:animate_do/animate_do.dart';
 
 import '../../theme/theme_model.dart';
 import 'login_controller.dart';
@@ -35,31 +36,57 @@ class _LoginPageState extends State<LoginPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(child: SingleChildScrollView(child: buildVerticalLogin())),
+      // Fundo da página com imagem
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: NetworkImage(
+                'https://static1.thegamerimages.com/wordpress/wp-content/uploads/2021/07/Steam-Library.jpg'),
+            fit: BoxFit.cover,
+          ),
+        ),
+        child: Stack(
+          children: [
+            // Camada com efeito de desfoque no retângulo central
+            Center(
+              child: ClipRect(
+                child: BackdropFilter(
+                  filter: ImageFilter.blur(sigmaX: 5, sigmaY: 5),
+                  child: Container(
+                    width: 700, // Largura do retângulo
+                    height: 550, // Altura do retângulo
+                    padding: const EdgeInsets.all(20.0),
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(20.0),
+                      color: Colors.white.withOpacity(0.4),
+                    ),
+                    child: buildVerticalLogin(),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+      ),
     );
   }
 
   Widget buildVerticalLogin() {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.center,
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          GestureDetector(
-            onTap: () {
-              themeService.toggleTheme();
-            },
-            child: Image.asset(
-              "assets/gamematch.png",
-              //width: MediaQuery.of(context).size.width * 0.7,
-              width: 300,
-            ),
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.center,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        GestureDetector(
+          onTap: () {
+            themeService.toggleTheme();
+          },
+          child: Image.asset(
+            "assets/gamematch.png",
+            width: 200,
           ),
-          //FadeInLeft(child: buildTextAnim()),
-          FadeInRight(child: buildForms()),
-        ],
-      ),
+        ),
+        FadeInRight(child: buildForms()),
+      ],
     );
   }
 
@@ -67,16 +94,22 @@ class _LoginPageState extends State<LoginPage> {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [
-        Visibility(visible: c.cadastro, child: _textBox("Nome", c.nameController, Icons.person_rounded)),
+        Visibility(
+            visible: c.cadastro,
+            child: _textBox("Nome", c.nameController, Icons.person_rounded)),
         _textBox("Email", c.userController, Icons.email_rounded),
-        _textBox("Senha", c.passController, Icons.key_rounded, rotateIcon: true, numberRotation: 3, pass: true),
-        _buildButtonLogin(c.cadastro ? "CADASTRAR" : "ENTRAR", () => c.login(context), isLoading: c.entrando, pTop: 0),
+        _textBox("Senha", c.passController, Icons.key_rounded,
+            rotateIcon: true, numberRotation: 3, pass: true),
+        _buildButtonLogin(
+            c.cadastro ? "CADASTRAR" : "ENTRAR", () => c.login(context),
+            isLoading: c.entrando, pTop: 0),
         _lembrarEsqueceu(),
       ],
     );
   }
 
-  Widget _buildButtonLogin(String texto, Function()? funcao, {double pTop = 10, bool isLoading = false}) {
+  Widget _buildButtonLogin(String texto, Function()? funcao,
+      {double pTop = 10, bool isLoading = false}) {
     return Padding(
       padding: EdgeInsets.only(top: pTop),
       child: ElevatedButton(
@@ -86,7 +119,8 @@ class _LoginPageState extends State<LoginPage> {
           elevation: 3,
           shadowColor: Colors.black,
           minimumSize: const Size.fromHeight(60),
-          backgroundColor: Theme.of(context).colorScheme.primary,
+          backgroundColor:
+              Color.fromARGB(255, 44, 205, 214), // Cor de fundo do botão
         ),
         child: isLoading
             ? const CircularProgressIndicator(color: Colors.white)
@@ -95,7 +129,17 @@ class _LoginPageState extends State<LoginPage> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisSize: MainAxisSize.min,
                 children: [
-                  Expanded(child: Text(texto, textAlign: TextAlign.center, style: GoogleFonts.nunitoSans(fontSize: 17, color: Colors.white, fontWeight: FontWeight.bold))),
+                  Expanded(
+                    child: Text(
+                      texto,
+                      textAlign: TextAlign.center,
+                      style: GoogleFonts.nunitoSans(
+                        fontSize: 17,
+                        color: Colors.white, // Cor do texto do botão
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                  ),
                   const Icon(Icons.arrow_forward_rounded, color: Colors.white),
                 ],
               ),
@@ -103,7 +147,12 @@ class _LoginPageState extends State<LoginPage> {
     );
   }
 
-  Widget _textBox(String hintText, TextEditingController controller, IconData icone, {bool rotateIcon = false, int numberRotation = 1, void Function()? funcaoSub, bool pass = false}) {
+  Widget _textBox(
+      String hintText, TextEditingController controller, IconData icone,
+      {bool rotateIcon = false,
+      int numberRotation = 1,
+      void Function()? funcaoSub,
+      bool pass = false}) {
     return Padding(
       padding: const EdgeInsets.only(bottom: 10),
       child: TextField(
@@ -115,12 +164,20 @@ class _LoginPageState extends State<LoginPage> {
         controller: controller,
         obscureText: pass,
         keyboardType: TextInputType.text,
-        style: GoogleFonts.nunitoSans(),
+        style: GoogleFonts.nunitoSans(
+          color: Colors.blueGrey, // Cor do texto
+        ),
         decoration: InputDecoration(
-          contentPadding: const EdgeInsets.symmetric(vertical: 25),
+          contentPadding: const EdgeInsets.symmetric(
+              vertical: 20, horizontal: 20), // Ajustando o padding interno
           prefixIcon: Padding(
             padding: const EdgeInsets.symmetric(horizontal: 15),
-            child: (rotateIcon == false) ? Icon(icone) : RotatedBox(quarterTurns: numberRotation, child: Icon(icone)),
+            child: (rotateIcon == false)
+                ? Icon(icone, color: Colors.blueGrey) // Cor do ícone
+                : RotatedBox(
+                    quarterTurns: numberRotation,
+                    child: Icon(icone,
+                        color: Colors.blueGrey)), // Cor do ícone rotacionado
           ),
           alignLabelWithHint: false,
           border: OutlineInputBorder(
@@ -128,19 +185,12 @@ class _LoginPageState extends State<LoginPage> {
             borderRadius: BorderRadius.circular(25),
           ),
           hintText: hintText,
-          hintStyle: GoogleFonts.nunitoSans(),
-          labelStyle: GoogleFonts.nunitoSans(),
-          fillColor: Theme.of(context).colorScheme.primary.withOpacity(0.5),
-          filled: true,
-
-          //errorText: "Senha inválida.",
-          //errorStyle: GoogleFonts.nunitoSans(color: Colors.red, fontSize: 15),
-          /*
-          focusedErrorBorder: OutlineInputBorder(
-            borderSide: BorderSide.none,
-            borderRadius: BorderRadius.circular(25),
+          hintStyle: GoogleFonts.nunitoSans(
+            color: const Color.fromARGB(255, 0, 0, 0)
+                .withOpacity(0.5), // Cor do texto de dica (hint)
           ),
-          */
+          filled: true,
+          fillColor: Colors.white, // Cor de fundo do campo
         ),
       ),
     );
@@ -168,11 +218,25 @@ class _LoginPageState extends State<LoginPage> {
             },
             child: Text(
               "Lembrar",
-              style: GoogleFonts.nunitoSans(color: themeService.isDarkMode ? Colors.white : Colors.black),
+              style: GoogleFonts.nunitoSans(
+                color: const Color.fromARGB(
+                    255, 0, 0, 0), // Alterado para um tom de verde azulado
+              ),
             ),
           ),
           const Spacer(),
-          TextButton(onPressed: () => setState(() => c.cadastro = !c.cadastro), child: Text(c.cadastro ? "Já tem conta? Faça o login" : "Não tem conta? Cadastre-se", style: GoogleFonts.nunitoSans()))
+          TextButton(
+            onPressed: () => setState(() => c.cadastro = !c.cadastro),
+            child: Text(
+              c.cadastro
+                  ? "Já tem conta? Faça o login"
+                  : "Não tem conta? Cadastre-se",
+              style: GoogleFonts.nunitoSans(
+                color: const Color.fromARGB(
+                    255, 0, 0, 0), // Alterado para um tom de verde azulado
+              ),
+            ),
+          ),
         ],
       ),
     );
