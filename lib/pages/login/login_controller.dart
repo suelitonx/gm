@@ -30,17 +30,18 @@ class LoginController extends ChangeNotifier {
 
     final r = cadastro ? await auth.register(email: userController.text.trim(), senha: passController.text, name: nameController.text.trim()) : await auth.login(email: userController.text.trim(), senha: passController.text);
 
-    if (r == false && context.mounted) {
+    if (r == false) {
+      if (!context.mounted) return;
       ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Não foi possível fazer o ${cadastro ? 'cadastro' : 'login'}.')));
     }
 
     if (context.mounted) {
       if (cadastro && r == true) {
-        login(context);
-      } else {
-        entrando = false;
-        notifyListeners();
+        cadastro = false;
       }
+
+      entrando = false;
+      notifyListeners();
     }
   }
 }

@@ -37,7 +37,6 @@ dependencies:
   cupertino_icons: ^1.0.6
   pocketbase: ^0.18.1
   shared_preferences: ^2.2.3
-  flutter_bloc: ^8.1.5
   animate_do: ^3.3.4
   google_fonts: ^6.2.1
   appinio_swiper: ^2.1.1

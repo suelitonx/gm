@@ -36,7 +36,6 @@ class ReviewsService implements IReviewsService {
       sucess = true;
     }).catchError((e) {
       sucess = false;
-      print(e);
     });
 
     return sucess;

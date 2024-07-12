@@ -1,30 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:gamematch/models/game_info.dart';
+import 'package:gamematch/states/game_info_state.dart';
 
 import '../services/game_service.dart';
 
-class GameInfoStore {
+class GameInfoStore extends ValueNotifier<GameInfoState> {
+  GameInfoStore() : super(EmptyGameInfoState());
+
   final service = GameService();
 
-  final ValueNotifier<bool> isLoading = ValueNotifier<bool>(false);
-
-  final ValueNotifier<String> error = ValueNotifier<String>('');
-
-  final ValueNotifier<GameInfo> currentGame = ValueNotifier<GameInfo>(GameInfo(id: -1, title: ''));
-
   getGameInfo(int id) async {
-    isLoading.value = true;
+    value = LoadingGameInfoState();
 
     try {
       final data = await service.getGameInfo(id: id);
-      currentGame.value = data;
-
-      //print(data.screenshots);
-      //print(data.requeriments);
+      value = LoadedGameInfoState(data);
     } catch (e) {
-      error.value = 'Erro ao carregar o jogo';
+      value = ErrorGameInfoState(e.toString());
     }
-
-    isLoading.value = false;
   }
 }
