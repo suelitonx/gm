@@ -12,29 +12,26 @@ class GameStore extends ValueNotifier<GamesState> {
   Future<void> getGames({bool somenteMeusJogos = false}) async {
     value = LoadingGamesState();
 
-    try {
-      final data = await service.getGames();
+    final data = await service.getGames();
 
-      List<int> jogosExcluidosDaLista = [];
+    List<int> jogosExcluidosDaLista = [];
 
-      await pbService.pb.collection('jogos_likes').getFirstListItem('id="${pbService.pb.authStore.model.id}"').then((value) {
-        if (value.id.isNotEmpty) {
-          final l = value.data["liked_games"].split(",").map((e) => int.parse(e)).toList();
-          for (var item in l) {
-            jogosExcluidosDaLista.add(item);
-          }
+    await pbService.pb.collection('jogos_likes').getFirstListItem('id="${pbService.pb.authStore.model.id}"').then((value) {
+      if (value.id.isNotEmpty) {
+        final l = value.data["liked_games"].split(",").map((e) => int.parse(e)).toList();
+        for (var item in l) {
+          jogosExcluidosDaLista.add(item);
         }
-      }).catchError((_) {});
-
-      if (somenteMeusJogos == true) {
-        data.removeWhere((element) => !jogosExcluidosDaLista.contains(element.id));
-      } else {
-        data.removeWhere((element) => jogosExcluidosDaLista.contains(element.id));
+        print(l.length);
       }
+    }).catchError((_) {});
 
-      value = LoadedGamesState(data);
-    } catch (e) {
-      value = ErrorGamesState(e.toString());
+    if (somenteMeusJogos == true) {
+      data.removeWhere((element) => !jogosExcluidosDaLista.contains(element.id));
+    } else {
+      data.removeWhere((element) => jogosExcluidosDaLista.contains(element.id));
     }
+
+    value = LoadedGamesState(data);
   }
 }

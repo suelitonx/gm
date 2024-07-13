@@ -70,14 +70,19 @@ class _UniqueGamePageState extends State<UniqueGamePage> {
 
             return Column(
               children: [
-                Image.network(
-                  g.thumbnail,
-                  colorBlendMode: BlendMode.darken,
-                  width: MediaQuery.of(context).size.width,
-                  fit: BoxFit.fill,
-                  loadingBuilder: (context, child, loadingProgress) {
-                    return loadingProgress == null ? child : const SizedBox(height: 300, child: Center(child: CircularProgressIndicator()));
-                  },
+                Center(
+                  child: Container(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: Image.network(
+                      g.thumbnail,
+                      colorBlendMode: BlendMode.darken,
+                      width: MediaQuery.of(context).size.width,
+                      fit: BoxFit.fill,
+                      loadingBuilder: (context, child, loadingProgress) {
+                        return loadingProgress == null ? child : const SizedBox(height: 300, child: Center(child: CircularProgressIndicator()));
+                      },
+                    ),
+                  ),
                 ),
                 Padding(
                   padding: const EdgeInsets.all(10),

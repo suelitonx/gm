@@ -31,7 +31,7 @@ class PocketbaseService extends ChangeNotifier {
 
     //Inicializa a instância do PocketBase
     _pb = PocketBase(
-      'http://127.0.0.1:8090', // http://localhost:8090 'https://educasaida.live
+      'https://poo2.pockethost.io',
       authStore: store,
       //httpClientFactory: kIsWeb ? () => FetchClient(mode: RequestMode.cors) : null,
     );

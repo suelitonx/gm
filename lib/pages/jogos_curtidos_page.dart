@@ -52,11 +52,14 @@ class _JogosCurtidosPageState extends State<JogosCurtidosPage> {
                         return ListTile(
                           title: Text(item.title, style: GoogleFonts.nunitoSans(fontSize: 15)),
                           onTap: () {
-                            Navigator.of(context).push(MaterialPageRoute(
+                            Navigator.of(context).push(
+                              MaterialPageRoute(
                                 builder: (context) => UniqueGamePage(
-                                      idJogo: item.id,
-                                      nomeJogo: item.title,
-                                    )));
+                                  idJogo: item.id,
+                                  nomeJogo: item.title,
+                                ),
+                              ),
+                            );
                           },
                           leading: CircleAvatar(
                             child: CachedNetworkImage(

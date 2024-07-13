@@ -37,9 +37,9 @@ class _LoginPageState extends State<LoginPage> {
     return Scaffold(
       // Fundo da página com imagem
       body: Container(
-        decoration: const BoxDecoration(
+        decoration: BoxDecoration(
           image: DecorationImage(
-            image: NetworkImage('https://static1.thegamerimages.com/wordpress/wp-content/uploads/2021/07/Steam-Library.jpg'),
+            image: Image.asset("assets/back.jpg").image,
             fit: BoxFit.cover,
           ),
         ),
