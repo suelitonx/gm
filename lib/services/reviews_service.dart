@@ -1,7 +1,7 @@
-import 'package:gamematch/models/review.dart';
+import 'package:gamematch/models/review_model.dart';
 import 'package:gamematch/services/pocketbase_service.dart';
 
-import '../models/review_view.dart';
+import '../models/review_view_model.dart';
 
 abstract class IReviewsService {
   Future<List<ReviewView>> getReviews({required int gameId});

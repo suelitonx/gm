@@ -1,4 +1,4 @@
-import 'package:gamematch/models/like.dart';
+import 'package:gamematch/models/like_model.dart';
 import 'package:gamematch/services/pocketbase_service.dart';
 import 'package:pocketbase/pocketbase.dart';
 
@@ -61,6 +61,7 @@ class LikeService {
             usuario: r.getStringValue('name', 'Anônimo'),
             jogo: r.getIntValue('jogo', 0),
             tipo: r.getIntValue('tipo', 0),
+            usuarioID: r.getStringValue('id_usuario', ''),
             valor: true,
             updated: '${data.substring(8, 10)}/${data.substring(5, 7)}/${data.substring(0, 4)} ${data.substring(11, 16)}',
           );

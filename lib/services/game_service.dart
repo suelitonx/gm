@@ -1,8 +1,8 @@
 import 'dart:convert';
 import 'package:gamematch/services/http/http_client.dart';
-import 'package:gamematch/models/game.dart';
-import 'package:gamematch/models/game_info.dart';
-import 'package:gamematch/models/review_view.dart';
+import 'package:gamematch/models/game_model.dart';
+import 'package:gamematch/models/game_info_model.dart';
+import 'package:gamematch/models/review_view_model.dart';
 import 'package:gamematch/services/pocketbase_service.dart';
 
 abstract class IGameService {

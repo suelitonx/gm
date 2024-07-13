@@ -1,5 +1,5 @@
 //GamesState
-import 'package:gamematch/models/game.dart';
+import 'package:gamematch/models/game_model.dart';
 
 sealed class GamesState {}
 

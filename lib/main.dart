@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'pages/home/home_page.dart';
-import 'pages/login/login_page.dart';
+import 'pages/home_page.dart';
+import 'pages/login_page.dart';
 import 'services/pocketbase_service.dart';
 import 'theme/theme.dart';
 import 'theme/theme_model.dart';

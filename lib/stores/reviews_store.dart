@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
-import 'package:gamematch/models/review_view.dart';
+import 'package:gamematch/models/review_view_model.dart';
 
-import '../models/review.dart';
+import '../models/review_model.dart';
 import '../services/reviews_service.dart';
 
 class ReviewStore {

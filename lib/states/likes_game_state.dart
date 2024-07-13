@@ -1,6 +1,6 @@
 //LikesGameState
 
-import 'package:gamematch/models/like.dart';
+import 'package:gamematch/models/like_model.dart';
 
 sealed class LikesGameState {}
 
